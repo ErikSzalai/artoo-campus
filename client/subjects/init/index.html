@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="ui/appbar/appbar.css">
   </head>
   
-  <body> <!-- bootstrap the app with your module -->
+  <body ng-app="artooInit"> <!-- bootstrap the app with your module -->
     <appbar>
       <div class="image">
         <img src="public/artoo-logo.png" alt="ArToo logo">
@@ -20,8 +20,10 @@
       </ul>
     </appbar>
     
-    <div ng-init="foo='Hooray! AngularJS is up and running!'" ng-bind="foo"></div>
+    <div ng-init="asd='Hooray! AngularJS is up and running!'" ng-bind="asd"></div>
     <!-- load angular -->
+    <script src="node_modules/angular/angular.min.js"></script>
     <!-- load app module -->
+    <script src="subjects/init/app.js"></script>
   </body>
 </html>
