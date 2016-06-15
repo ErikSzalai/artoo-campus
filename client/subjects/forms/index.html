@@ -13,7 +13,56 @@
   <body ng-app="artoo">
     <appbar></appbar>
     
+    
+    <div ng-controller="ItemsCtrl">
+    <label for="select">Items to update:</label>  
+    <select name="select" 
+    ng-options="option.code as option.name for option in ItemsSrv.get()" 
+    ng-model="selectedItem" 
+    ng-change="selectItem(selectedItem)">
+    </select>
+    
     <!-- implement a form for inserting items -->
+    <form name="inputForm" 
+    ng-submit="update(item, inputForm)" 
+    novalidate autocomplete="off">
+      
+      <div class="row">
+        <input type="text" name="name" ng-model="item.name" required>
+        <label>Name</label>
+      </div>
+      
+      <div class="row">
+        <textarea name="description" ng-model="item.description" required></textarea>
+        <label>Description</label>
+      </div>
+      
+      <div class="row">
+        <input type="text" name="image" ng-model="item.image" required>
+        <label>Image</label>
+      </div>
+      
+      <button type="submit" ng-disabled="inputForm.$invalid">Send</button>
+      <a href ng-click="resetForm(insertForm)">Reset</a>
+      <hr>
+      
+    </form>
+    <!--<div>Dirty: {{inputForm.$dirty}}</div>-->
+    <!--<div>Pristine: {{inputForm.$pristine}}</div>-->
+    <!--<div>Valid: {{inputForm.$valid}}</div>-->
+    <!--<div>Invalid: {{inputForm.$invalid}}</div>-->
+    <!--<div>Submitted: {{inputForm.$submitted}}</div>-->
+    <!--<div>Error: {{inputForm.$error}}</div>-->
+    <div ng-repeat="item in ItemsSrv.get()">
+      <div>Name: {{item.name}}</div>
+      <div>Description: {{item.description}}</div>
+      <div><img ng-src="{{item.image}}" alt='{{item.name}} picture'/></div>
+    </div>
+    
+   
+    
+    
+
     
     <!-- interpolate results -->
     
@@ -25,9 +74,11 @@
     
     <!-- create an items service and extend it in the controller -->
     
+    
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="ui/appbar/appbar.js"></script>
     <script src="subjects/forms/app.js"></script>
     <script src="subjects/forms/items.controller.js"></script>
+    <script src="subjects/forms/items.service.js"></script>
   </body>
 </html>

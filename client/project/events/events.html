@@ -1,0 +1,29 @@
+<div class="md-display-1" layout-margin layout-padding>Events</div>
+<div layout-margin layout-padding>
+  <md-input-container class="md-block" flex>
+    <label><i class="material-icons">search</i> Find an event</label>
+    <input type="text" ng-model="search"/>
+  </md-input-container>
+</div>
+
+<md-content>
+  <md-list flex layout-margin>
+    <md-list-item md-whiteframe="3"  class="md-3-line" ng-click="null" ng-repeat="event in EventsCtrl.EventsSrv.get() | filterTitle:search">
+      <div class="md-list-item-text" layout="column">
+        <h3><strong>{{event.title}}</strong></h3>
+        <h4>{{event.date | date:"dd/MM/yyyy"}} - {{event.time | date:"hh:mm"}}</h4>
+        <p>{{event.location}}</p>
+        <!--<p>{{event.notes}}</p>-->
+        <!--<button class="md-button md-raised md-accent flex" -->
+        <!--ng-click="EventsCtrl.openOffscreen(EventsCtrl.detailsFormat([{val: event.location}, {val: event.notes}]))">More Info</button>-->
+        
+        <md-button class="md-raised md-secondary" ng-click="EventsCtrl.EventsSrv.delete(event.id)" >delete</md-button>
+       
+      </div>
+    </md-list-item>
+  </md-list>
+</md-content>
+
+<md-content layout="row" layout-margin layout-padding>
+  <md-button class="md-raised md-primary" ui-sref="add-event" flex>Add new Event</md-button>
+</md-content>

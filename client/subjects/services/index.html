@@ -7,16 +7,46 @@
     <title>Artoo Campus - Services</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="ui/appbar/appbar.css">
-  </head>
+    <link rel="stylesheet" href="ui/form/form.css">
   
   <body ng-app="artoo">
     <appbar></appbar>
     
+    <!-- create a user service with the following methods: getStatus, takeHit, drinkPotion, useMana, useGem, gainExp, die, respawn -->
+    <div style="border-bottom: 2px solid #222; margin-bottom: 20px; padding-bottom: 20px" ng-controller="PlayerCtrl">
+      <div>level: {{PlayerSrv.get().level}}</div>
+      <div>hp: {{PlayerSrv.get().hp}}</div>
+      <div>is Dead: {{PlayerSrv.isDead()}}</div>
+      
+      <div style="margin-top: 10px;">
+        <span ng-hide="PlayerSrv.idDead()">
+      <button ng-click="PlayerSrv.takeHit(37)">Take Hit</button>
+      <button ng-click="PlayerSrv.drinkPotion()">Drink Potion</button>
+      <button ng-click="PlayerSrv.levelUp()">Level Up, Bitch!!!</button>
+      <button ng-click="PlayerSrv.die()">Die, Bitch!!!</button>
+      </span>
+      <button ng-show="PlayerSrv.isDead()" ng-click="PlayerSrv.respawn()">Respawn</button>
+    </div>
+    
     <!-- create an items service with the following methods: get, add, remove, etc -->
+    <div ng-controller="ItemsCtrl">
+      <div ng-repeat="item in ItemsSrv.get()">
+        <div>Item # {{$index+1}}</div>
+        <div>Name: {{item.name}}</div>
+        <div>Description: {{item.description}}</div>
+        <div>Avalibility: {{item.availability}}</div>
+        <div>Price: {{item.price}} gold</div>
+        <div>Races: {{item.races}}</div>
+        
+        <button ng-click="ItemsSrv.updateAvailability(item, -1)">-1</button>
+        <button ng-click="ItemsSrv.updateAvailability(item, 1)">+1</button>
+        <button ng-click="ItemsSrv.remove(item)">Remove</button>
+        <hr>
+      </div>
+    </div>
     
     <!-- create a controller to expose the service to the view -->
     
-    <!-- create a user service with the following methods: getStatus, takeHit, drinkPotion, useMana, useGem, gainExp, die, respawn -->
     
     <!-- create a controller to expose the service to the view -->
     
@@ -25,6 +55,10 @@
     <script src="subjects/services/app.js"></script>
     
     <!-- include items service -->
+    <script src="subjects/services/items.service.js"></script>
+    <script src="subjects/services/items.controller.js"></script>
+    <script src="subjects/services/player.controller.js"></script>
+    <script src="subjects/services/player.service.js"></script>
     
     <!-- include user service -->
   </body>
