@@ -18,68 +18,60 @@
          http://jsonplaceholder.typicode.com/comments
          http://jsonplaceholder.typicode.com/albums
          http://jsonplaceholder.typicode.com/todos -->
-         
-         <div ng-controller="RedditCtrl">
-           
-           <form ng-submit="query(search)">
-             <label>Sort by hot</label>
-             <input type="radio" ng-model="search.sort" value="hot">
-             
-             <label>Sort by top</label>
-             <input type="radio" ng-model="search.sort" value="top">
-             
-             <label>Sort by new</label>
-             <input type="radio" ng-model="search.sort" value="new">
-             
-             <label>Search</label>
-             <input type="text" ng-model="search.q">
-           </form>
-           
-           <div ng-show="loading">Loading...</div>
-           <div ng-hide="loading" ng-repeat="reddit in reddits">
-             {{reddit}}
-           </div>
-           
-           <div ng-repeat="reddit in reddits">
-             {{reddit}}
-           </div>
-         </div>
-         
-         <hr>
-         
-    <div ng-controller="UsersCtrl">
-      
-      <div ng-show="loading">Loading...</div>
-      
-      <form ng-submit="save(user, form)" name="form" novalidate autocomplete="off">
-        <label>Name</label>
-        <input type="text" ng-model="user.name">
-        
-        <label>Email</label>
-        <input type="text" ng-model="user.email">
-        
-        <button type="submit" ng-disabled="form.$invalid">Save</button>
-      </form>
-      
-      
-      
-      <div ng-show="userDetails && !loading">User details: {{userDetails}}</div>
-      
-      <div ng-hide="loading">
-        <ul>
-          <li ng-repeat="user in users">
-            <a href ng-click="getDetails(user.id)">
-              {{user.name}}
-              </a>
-              <button ng-click="remove(user)">Remove</button>
-          </li>
-        </ul>
-      </div>
-    </div>
     
     <!-- create a reddit resource to play with reddits -->
     <!-- https://www.reddit.com/dev/api#GET_search -->
     <!-- https://www.reddit.com/search.json?q=ferrari -->
+    
+    
+  <div ng-controller="RedditCtrl">
+   <from ng-submit="query(search)">
+     <label>Sort by hot</label>
+     <input type="radio" ng-model="search.sort" value="hot">
+     
+     <label>Sort by top</label>
+     <input type="radio" ng-model="search.sort" value="top">
+     
+     <label>Sort by new</label>
+     <input type="radio" ng-model="search.sort" value="new">
+     
+      Search
+      <input type="text" ng-model="search.q" name=""/>
+    </from>
+    
+    <div ng-show="loading"> Loading... </div>
+    <div ng-hide="loading" ng-repeat="reddit in reddits">
+      {{reddit.data}}
+    </div>
+    
+    <!--<div ng-repeat="reddit in reddits">-->
+    <!--  {{reddit.data}}-->
+    <!--</div>-->
+  </div>
+    
+  <hr>
+      
+    <div ng-controller="UsersCtrl">
+      <div ng-show="loading">Loading...</div>
+      
+      <form ng-submit="save(user, form)" name="form" novalidate autocomplete="off">
+        <label>Name</label>
+        <input type="text" ng-model="user.name" name=""/>
+        <label>E-mail</label>
+        <input type="email" ng-model="user.email" name=""/>
+        <button type="submit" ng-disabled)="form.$invalid || loading">Submit</button>
+      </form>      
+      
+      <div ng-show="userDetails && !loading">{{userDetails}}</div>
+      <div ng-hide="loading">
+      <ul>
+        <li ng-repeat="user in users">
+          <a href ng-click="getDetails(user.id)">{{user.name}}</a>
+          <button ng-click="remove(user)">[remove]</button>
+        </li>
+      </ul>
+    </div>
+    </div>
     
     <script src="node_modules/angular/angular.min.js"></script>
     <!-- load angular-resource -->

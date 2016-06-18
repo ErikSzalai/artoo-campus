@@ -1,7 +1,7 @@
-angular.module('artoo').controller('ItemsDetailsCtrl', function ($stateParams, ItemsSrv) {
-  this.loading = true;
+angular.module('artoo').controller('ItemsDetailsCtrl', function (ItemsSrv, $stateParams) {
+    this.loading = true;
   ItemsSrv.getDetails($stateParams.code, (item) => {
-    this.item = item;
-    this.loading = false;
-  });
+      this.loading = false;
+      this.item = item;
+  });  
 });

@@ -1,9 +1,15 @@
-module.exports = () => {
-  function get(req, res) {
-    res.status(200).send([]);
+module.exports = function() {
+  function query(req, res) {
+    console.log(req, timeRequest);
+     res.status(200).send([{name:'ascia bipenne', description: 'blablabla armi blablabla armi'}]);
   }
   
-  return {
-    get: get,
-  };
+  function save(req, res) {
+    console.log(req.body);
+    res.status(201).send();
+  }
+    return {
+      query: query,
+      save: save,
+    };
 }

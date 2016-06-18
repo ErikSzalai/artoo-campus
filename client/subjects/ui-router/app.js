@@ -8,77 +8,77 @@ angular.module('artoo', [
   
   .config(($stateProvider, $urlRouterProvider) => {
     $stateProvider
-      .state('home', {
-        controller: function () {console.info('I am home')},
-        template: '<h1>Home</h1>',
-        url: '/',
+    .state('home',{
+      controller: function () {console.log('Honey, I\'m home')},
+      template:'<h1>Home</h1>',
+      url: '/'
     })
-      
-      .state('items', {
-        templateUrl: 'subjects/ui-router/items/items.html',
-        controller: 'ItemsCtrl',
-        controllerAs: 'ItemsCtrl',
-        url: '/items',
-      })
-      
-      .state('items-details', {
-        controller: 'ItemsDetailsCtrl',
-        controllerAs: 'ItemsDetailsCtrl',
-        templateUrl: 'subjects/ui-router/items/items-details.html',
-        url: '/items/:code',
-        // resolve: {
-        //   item: function($stateParams, ItemsSrv) {
-        //     return ItemsSrv.getDetails($stateParams.code);
-        //   },
-        // },
-        // onEnter: function ($state, item) {
-        //   if (!item) $state.go('items');
-        // },
-      })
-      
-      .state('contacts', {
-        abstract: true,
-        controller: 'ContactsCtrl',
-        controllerAs: 'ContactsCtrl',
-        data: {
-          color: 'red',
+    
+    .state('items', {
+      templateUrl:'subjects/ui-router/items/items.html',
+      controller: 'ItemsCtrl',
+      controllerAs: 'ItemsCtrl',
+      url: '/items',
+    })
+    
+    .state('items-details', {
+      controller: 'ItemsDetailsCtrl',
+      templateUrl: 'subjects/ui-router/items/items-details.html',
+      url: '/items/:code',
+      // resolve: {
+      //   item: function ($stateParams, ItemSrv) {
+      //     return ItemsSrv.getDetails($stateParams.code);
+      //   },
+      // },
+      // onEnter: function () {
+      //   if (!item) $state.go('items');
+      // },
+    })
+    
+    .state('contacts', {
+      abstract: true,
+      controller: 'ContactsCtrl',
+      controllerAs: 'ContactsCtrl',
+      data: {
+        color: 'red',
+      },
+      resolve: {
+        color: function($rootScope, $timeout) {
+          //console.log('comincia il resolve');
+          $rootScope.loading = true;
+          return $timeout(function() {
+            //console.log('finisce il resolve');
+            $rootScope.loading = false;
+            return 'blue';
+          }, 1500);
         },
-        // resolve properties are directly available as arguments for onEnter/onExit
-        resolve: {
-          color: function ($rootScope, $timeout) {
-            console.info('resolve starts');
-            return $timeout(function () {
-              console.info('resolve ends');
-              return 'pink';
-            }, 1500);
-          },
-        },
-        onEnter: function ($state, color) {
-          console.info('onEnter function');
-          if (color !== 'blue') console.log('wrong color');
-        },
-        onExit: function ($state, color) {
-          console.info('onExit function');
-        },
-        templateUrl: 'subjects/ui-router/contacts/contacts.html',
-        url: '/contacts',
-      })
-       // to access a child state the parent state needs to be resolved 
-      .state('contacts.list', {
-        templateUrl: 'subjects/ui-router/contacts/list/list.html',
-        url: '/list',
+      },
+      onEnter: function ($state, color){
+        //console.log('on enter funct');
+        if (color !== 'blue') $state.go('home');
+      },
+      templateUrl: 'subjects/ui-router/contacts/contacts.html',
+      url: '/contacts',
       })
       
-      .state('contacts.add', {
-        template: '<h2>Add</h2>',
-        url: '/add',
-      })
-      
-      .state('contacts.query', {
-        template: '<h2>Query</h2><div>{{params}}</div>',
-        url: '/query?profession&sex',
-        controller: function ($scope, $stateParams) {$scope.params = $stateParams},
-      });
-    // default state if state is not found or has prop abstract: true
+    .state('contacts.list', {
+      templateUrl: 'subjects/ui-router/contacts/list/list.html',
+      url: '/list'
+    });
+    $urlRouterProvider.when('/asd', '/contacts/list');
     $urlRouterProvider.otherwise('/');
-  });
+  })
+  
+    // .run(($rootScope) => {
+    //   // $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
+    //   //   $rootScope.loading = true;
+    //   //   fromState.name = fromState.name || 'nowhere';
+    //     //console.log('transition starts from state: ' + fromState.name + ' to state ' + toState.name + '...');
+    //   });
+      
+    //   $rootScope.$on('$stateChangeSuccess', function (event, toState, fromState) {
+    //     $rootScope.loading = false;
+    //     toState.name = toState.name || 'nowhere';
+    //     //console.log('transition succeeded');
+    //   });
+    //});

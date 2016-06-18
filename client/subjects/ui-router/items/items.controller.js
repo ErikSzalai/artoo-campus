@@ -1,3 +1,3 @@
-angular.module('artoo').controller('ItemsCtrl', function (ItemsSrv) {
-  this.ItemsSrv = ItemsSrv;
-});
+angular.module('artoo').controller('ItemsCtrl', function(ItemsSrv){
+    this.ItemsSvr = ItemsSrv;
+})
