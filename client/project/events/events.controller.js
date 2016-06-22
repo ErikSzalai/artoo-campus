@@ -1,32 +1,25 @@
-angular.module('appenda').controller('EventsCtrl', function (EventsSrv, $mdDialog) {
+angular.module('appenda').controller('EventsCtrl', function ($scope, EventsSrv) {
   this.EventsSrv = EventsSrv;
   
-  /*this.detailsFormat = function (data) {
-    var text = '';
-    data.forEach(function (singleData) {
-      text += singleData.val + innerHTML('<br>');
-    });
-    return text;
-  };*/
+  $scope.query = function () {
+    $scope.queryLoading = true;
+    EventsSrv.query()
+    .then(data => $scope.events = data)
+    .catch(err => console.error(err))
+    .finally(() => $scope.queryLoading = false);
+  };
   
-  // this.openOffscreen = function (text) {
-  //   $mdDialog.show(
-  //     $mdDialog.alert()
-  //       .clickOutsideToClose(true)
-  //       .title('Details')
-  //       .textContent(text)
-  //       .ariaLabel('Offscreen Demo')
-  //       .ok('Got it!')
-  //       // Or you can specify the rect to do the transition from
-  //       .openFrom({
-  //         top: -50,
-  //         width: 30,
-  //         height: 80
-  //       })
-  //       .closeTo({
-  //         left: 1500
-  //       })
-  //   );
-  //};
+  $scope.query();
   
+  $scope.remove = function (event) {
+    event.$remove()
+    .then((data) => EventsSrv.query())
+    .then(data => $scope.events = data)
+    .catch((err) => {
+      if(err.status === 404){
+        alert('Refresh');
+      }
+    })
+    .finally();
+  };
 });

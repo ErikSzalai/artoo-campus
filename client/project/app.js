@@ -4,6 +4,7 @@ angular.module('appenda', [
   'ngAnimate',
   'ngMaterial',
   'ui.router',
+  'ngResource',
 ])
 
 .config(($mdThemingProvider) => {
@@ -27,13 +28,13 @@ angular.module('appenda', [
       controller: 'AddContactCtrl',
       controllerAs: 'AddContactCtrl',
       templateUrl:'project/add-contact/add-contact.html',
-      url: '/add-contact',
+      url: '/add-contact/:id',
     })
     
     .state('add-event', {
       controller: 'AddEventCtrl',
       controllerAs: 'AddEventCtrl',
       templateUrl:'project/add-event/add-event.html',
-      url:'/add-event',
+      url:'/add-event/:id',
     });
 });
